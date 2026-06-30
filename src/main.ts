@@ -289,9 +289,15 @@ interface Person {
 }
 
 interface Sofőr extends Person {
-  nev: "Matthew Broderick";
-  kor: 22;
-  hobbi: "Színészet";
+  JogositvanyTipus: string;
+};
+
+
+const driver: Sofőr = {
+nev: "Matthew Broderick",
+  kor: 22,
+  hobbi: "Színészet",
   JogositvanyTipus: "B"
 };
-console.log("Sofőr adatai:", {nev: "Matthew Broderick", kor: 22, hobbi: "Színészet", JogositvanyTipus: "B"});
+console.log("Sofőr adatai:", {nev: "Matthew Broderick", kor: 22, 
+  hobbi: "Színészet", JogositvanyTipus: "B"});
