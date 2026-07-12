@@ -323,7 +323,7 @@ console.log("HATALMAS FELADATOK");
 
 */
 
-let currenXP: number = 750;
+/* let currenXP: number = 750;
 let requiredXp: number = 1000;
 const characterName: string = "BélaPaladin";
 const newLvl: number = (requiredXp - currenXP);
@@ -431,3 +431,111 @@ officeFloor = 12;
 console.log(officeFloor);
 officeFloor = "B";
 console.log(officeFloor);
+
+
+//.1 A zsákmányos láda (Objektum + Tömb kombináció)
+/* 
+koncepció: Egy objektum beépített tulajdonságaként egy tömböt kezelünk, és azt módosítjuk.
+
+A küldetés: Hozz létre egy treasureChest nevű objektumot inline gépeléssel. Az objektumnak az alábbi fix struktúrával kell rendelkeznie:
+
+    chestType: string (pl. "Arany Láda")
+
+    gold: number (pl. 250)
+
+    lootItems: string[] (egy tömb, amiben alapból van két tárgy, pl. "Kard", "Gyűrű")
+
+A csavar: Miután létrehoztad az objektumot, 
+a kód következő sorában adj hozzá egy harmadik tárgyat 
+(pl. "Gomba") a treasureChest objektumon belüli lootItems tömbhöz a .push() segítségével!
+Kimenet: Írasd ki a konzolra a láda típusát, 
+valamint a teljes objektumot a console.table() paranccsal, hogy lásd, bekerült-e a harmadik tárgy!
+*/
+
+const KincsesLada: {"LádaTipus":string, "pengő":number, "tárgyak":string[]} = {
+  LádaTipus: "Bronz Láda",
+  pengő: 1500,
+  tárgyak: ["Szekerce", "Öv"]
+  
+}
+console.log(KincsesLada.LádaTipus);
+KincsesLada.tárgyak.push("Báránybőr tarisznya");
+console.table(KincsesLada);
+
+//2. Az intelligens fegyverkovács (Union típus + Függvény + Feltétel)
+/*
+koncepció: Egy függvény paraméterként unió típust vár, és a típus alapján dönt a működéséről (typeof használatával).
+
+A küldetés: RPG játékokban a fegyverek állapota (durability) néha egy szám (pl. 85%), 
+néha pedig egy státusz szöveg (pl. "Törött", "Új"). Írj egy inspectWeapon nevű függvényt, 
+ami egyetlen paramétert vár: durability, aminek a típusa number | string lehet!
+
+A csavar (belső logika): * Ha a kapott érték string,
+a függvény térjen vissza ezzel a szöveggel: "A fegyver státusza: [érték]".
+
+    Ha a kapott érték number, vizsgálja meg: 
+    ha 20 alatt van, térjen vissza azzal, hogy "Azonnali javítás szükséges!", 
+    különben pedig azzal, hogy "A fegyver állapota biztonságos: [érték]%."
+
+Kimenet: Hívd meg a függvényt egyszer egy számmal (pl. 15), 
+egyszer pedig egy szöveggel (pl. "Kopott"), a visszatérési értékeket mentsd el változókba 
+és logold ki őket!
+
+*/
+
+function fegyverÁllapot(durability: number | string): string {
+  if (typeof durability === "string") {
+    return `A fegyver státusza: ${durability}`;
+  } else {
+    if (durability < 20) {
+      return "Azonnali javítás szükséges!";
+    } else {
+      return `A fegyver állapota biztonságos: ${durability}%.`;
+    }
+  }
+}
+
+const status1 = fegyverÁllapot(15);
+console.log(status1); // Azonnali javítás szükséges!
+
+const status2 = fegyverÁllapot("Kopott");
+console.log(status2); // A fegyver státusza: Kopott
+
+
+
+//3.A túra szakasz-számláló (Objektum + Tömb + Függvény matek
+/*
+A koncepció: Egy összetett objektumot passzolunk be egy függvénynek paraméterként, 
+ami kiszámol belőle egy végeredményt.
+
+A küldetés: Készíts egy hikingTrip objektumot inline gépeléssel, az alábbi adatokkal:
+
+    trailName: string (pl. "Kéktúra - 01. szakasz")
+
+    sectionDistances: number[] (egy számokból álló tömb, 
+    ami a részszakaszok kilométereit tartalmazza, pl. [5, 12, 7])
+
+A csavar: Írj egy calculateTotalDistance nevű függvényt, 
+ami paraméterként egy ilyen felépítésű objektumot vár. 
+A függvényen belül egy ciklussal (pl. for...of vagy sima for) 
+add össze a sectionDistances tömbben lévő számokat! 
+A függvény térjen vissza a teljes összeggel (number).
+Kimenet: Hívd meg a függvényt a hikingTrip objektumoddal, 
+és írasd ki a konzolra a túra nevét és a kiszámolt össztávolságot egy szép mondatban!
+*/
+
+const turaTerv:{turaNeve:string, turaHossza:number[]} = {
+  turaNeve: "Kéktúra - 01. szakasz",
+  turaHossza: [5, 12, 7]
+};
+
+function teljesTuraHossz(tura: { turaNeve: string; turaHossza: number[] }): number {
+  let osszesHossz = 0;
+  for (const szakasz of tura.turaHossza) {
+    osszesHossz += szakasz;
+  }
+  return osszesHossz;
+}
+
+const totalDistance = teljesTuraHossz(turaTerv);
+console.log(`${turaTerv.turaNeve} össztávolsága: ${totalDistance} km.`);
